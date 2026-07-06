@@ -86,4 +86,4 @@ money-based aggregates are **always filtered to a single currency** before being
 - Backend: Render/Railway (Node service)
 - Database: managed Postgres (Neon/Supabase free tier)
 - Frontend: Vercel
-- Environment config via `.env`, never committed (see `.gitignore`)
+- Environment config via `.env`, never committed (see `.gitignore`)yeah this works
