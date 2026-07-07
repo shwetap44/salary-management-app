@@ -4,6 +4,7 @@ import { getEmployee, getSalaryHistory } from "../api/employees";
 import { EmployeeWithSalary, SalaryRecord } from "../types/employee";
 import { Money } from "../components/Money";
 import { StatusBadge } from "../components/StatusBadge";
+import { getCountryName } from "../utils/country";
 
 export function EmployeeDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -49,7 +50,7 @@ export function EmployeeDetailPage() {
           </div>
           <div>
             <dt className="text-muted">Country</dt>
-            <dd className="mt-0.5">{employee.country}</dd>
+            <dd className="mt-0.5">{getCountryName(employee.country)}</dd>
           </div>
           <div>
             <dt className="text-muted">Email</dt>

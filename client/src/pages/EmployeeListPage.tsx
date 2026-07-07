@@ -4,6 +4,7 @@ import { listEmployees } from "../api/employees";
 import { EmployeeWithSalary } from "../types/employee";
 import { Money } from "../components/Money";
 import { StatusBadge } from "../components/StatusBadge";
+import { getCountryName } from "../utils/country";
 
 const DEPARTMENTS = [
   "Engineering", "Sales", "Marketing", "Human Resources", "Finance",
@@ -50,11 +51,39 @@ export function EmployeeListPage() {
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (page <= 4) {
+        pages.push(1, 2, 3, 4, 5, 6);
+        pages.push("...");
+        pages.push(totalPages);
+      } else if (page >= totalPages - 3) {
+        pages.push(1);
+        pages.push("...");
+        for (let i = totalPages - 5; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push("...");
+        pages.push(page - 2, page - 1, page, page + 1, page + 2);
+        pages.push("...");
+        pages.push(totalPages);
+      }
+    }
+    return pages;
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-semibold">Employees</h2>
+          <h2 className="text-2xl font-semibold font-display">Employees</h2>
           <p className="text-sm text-muted mt-1">
             {total.toLocaleString()} people across the organization
           </p>
@@ -86,7 +115,7 @@ export function EmployeeListPage() {
         >
           <option value="">All countries</option>
           {COUNTRIES.map((c) => (
-            <option key={c} value={c}>{c}</option>
+            <option key={c} value={c}>{getCountryName(c)}</option>
           ))}
         </select>
       </div>
@@ -138,7 +167,7 @@ export function EmployeeListPage() {
                     <div className="text-xs text-muted mt-0.5 money">{employee.employeeCode}</div>
                   </td>
                   <td className="px-4 py-3">{employee.department}</td>
-                  <td className="px-4 py-3">{employee.country}</td>
+                  <td className="px-4 py-3">{getCountryName(employee.country)}</td>
                   <td className="px-4 py-3">
                     <Money amount={employee.currentSalary} currencyCode={employee.salaryCurrency} />
                   </td>
@@ -155,18 +184,44 @@ export function EmployeeListPage() {
         <span className="text-muted">
           Page {page} of {totalPages}
         </span>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
-            className="rounded-md border border-border px-3 py-1.5 disabled:opacity-40 hover:bg-bg"
+            className="rounded-md border border-border px-3 py-1.5 disabled:opacity-40 hover:bg-bg mr-1 text-xs font-semibold text-ink"
           >
             Previous
           </button>
+          
+          {getPageNumbers().map((p, idx) => {
+            if (p === "...") {
+              return (
+                <span key={`ellipsis-${idx}`} className="px-1.5 text-muted text-xs">
+                  ...
+                </span>
+              );
+            }
+            const isLast = p === totalPages;
+            const showLastLabel = isLast && totalPages > 7 && page < totalPages - 3;
+            return (
+              <button
+                key={`page-${p}`}
+                onClick={() => setPage(Number(p))}
+                className={`rounded-md px-2.5 py-1.5 border text-xs font-semibold transition-colors ${
+                  page === p
+                    ? "bg-accent border-accent text-white"
+                    : "border-border bg-surface text-ink hover:bg-bg"
+                }`}
+              >
+                {showLastLabel ? "Last" : String(p)}
+              </button>
+            );
+          })}
+
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page >= totalPages}
-            className="rounded-md border border-border px-3 py-1.5 disabled:opacity-40 hover:bg-bg"
+            className="rounded-md border border-border px-3 py-1.5 disabled:opacity-40 hover:bg-bg ml-1 text-xs font-semibold text-ink"
           >
             Next
           </button>

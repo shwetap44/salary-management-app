@@ -5,17 +5,7 @@ import { KpiCard } from "../components/KpiCard";
 import { HeadcountByCountryChart } from "../components/HeadcountByCountryChart";
 import { DepartmentSalaryChart } from "../components/DepartmentSalaryChart";
 import { Money } from "../components/Money";
-
-const COUNTRY_NAMES: Record<string, string> = {
-  IN: "India",
-  US: "United States",
-  GB: "United Kingdom",
-  DE: "Germany",
-  AU: "Australia",
-  CA: "Canada",
-  SG: "Singapore",
-  AE: "UAE",
-};
+import { COUNTRY_NAMES } from "../utils/country";
 
 export function InsightsPage() {
   const [headcount, setHeadcount] = useState<HeadcountSummary | null>(null);

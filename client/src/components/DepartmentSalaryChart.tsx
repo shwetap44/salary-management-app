@@ -6,20 +6,31 @@ interface Props {
   currencyCode: string;
 }
 
-// Money-based chart — always accent-blue, and the currency code is baked
-// into every tooltip so a reader never mistakes this for a universal figure.
 export function DepartmentSalaryChart({ data, currencyCode }: Props) {
   return (
-    <ResponsiveContainer width="100%" height={280}>
-      <BarChart data={data} margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#E4E4E1" vertical={false} />
-        <XAxis dataKey="department" tick={{ fontSize: 12, fill: "#6B6B66" }} />
-        <YAxis tick={{ fontSize: 12, fill: "#6B6B66" }} tickFormatter={(v) => v.toLocaleString()} />
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart
+        layout="vertical"
+        data={data}
+        margin={{ top: 8, right: 16, left: 16, bottom: 8 }}
+      >
+        <CartesianGrid strokeDasharray="3 3" stroke="#E4E4E1" horizontal={false} />
+        <XAxis
+          type="number"
+          tick={{ fontSize: 12, fill: "#6B6B66" }}
+          tickFormatter={(v) => v.toLocaleString()}
+        />
+        <YAxis
+          type="category"
+          dataKey="department"
+          tick={{ fontSize: 12, fill: "#1C1C1A", fontWeight: 500 }}
+          width={130}
+        />
         <Tooltip
           formatter={(value: number) => [`${currencyCode} ${value.toLocaleString()}`, "Average salary"]}
           contentStyle={{ fontSize: 13, borderRadius: 8, borderColor: "#E4E4E1" }}
         />
-        <Bar dataKey="averageSalary" fill="#3452C6" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="averageSalary" fill="#3452C6" radius={[0, 4, 4, 0]} barSize={14} />
       </BarChart>
     </ResponsiveContainer>
   );
