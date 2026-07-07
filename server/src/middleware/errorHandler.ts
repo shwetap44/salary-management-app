@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { EmployeeNotFoundError, CurrencyMismatchError } from "../services/employee.service";
+import { MissingCountryFilterError, CountryNotFoundError } from "../services/insights.service";
 
 export function errorHandler(
   err: Error,
@@ -7,10 +8,10 @@ export function errorHandler(
   res: Response,
   _next: NextFunction
 ) {
-  if (err instanceof EmployeeNotFoundError) {
+  if (err instanceof EmployeeNotFoundError || err instanceof CountryNotFoundError) {
     return res.status(404).json({ error: err.message });
   }
-  if (err instanceof CurrencyMismatchError) {
+  if (err instanceof CurrencyMismatchError || err instanceof MissingCountryFilterError) {
     return res.status(400).json({ error: err.message });
   }
 

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { env } from "./config/env";
 import employeeRoutes from "./routes/employee.routes";
+import insightsRoutes from "./routes/insights.routes";
 import healthRoutes from "./routes/health.routes";
 import { errorHandler } from "./middleware/errorHandler";
 
@@ -13,6 +14,7 @@ export function createApp() {
 
   app.use("/api/health", healthRoutes);
   app.use("/api/employees", employeeRoutes);
+  app.use("/api/insights", insightsRoutes);
 
   app.use(errorHandler);
 
