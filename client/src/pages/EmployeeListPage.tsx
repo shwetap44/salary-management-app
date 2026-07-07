@@ -162,11 +162,13 @@ export function EmployeeListPage() {
                   <td className="px-4 py-3">
                     <Link
                       to={`/employees/${employee.id}`}
-                      className="font-medium text-ink hover:text-accent"
+                      className="block group"
                     >
-                      {employee.firstName} {employee.lastName}
+                      <div className="font-medium text-ink group-hover:text-accent transition-colors">
+                        {employee.firstName} {employee.lastName}
+                      </div>
+                      <div className="text-xs text-muted mt-0.5 money">{employee.employeeCode}</div>
                     </Link>
-                    <div className="text-xs text-muted mt-0.5 money">{employee.employeeCode}</div>
                   </td>
                   <td className="px-4 py-3">{employee.department}</td>
                   <td className="px-4 py-3">{getCountryName(employee.country)}</td>
