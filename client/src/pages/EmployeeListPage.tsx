@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { listEmployees } from "../api/employees";
 import { EmployeeWithSalary } from "../types/employee";
 import { Money } from "../components/Money";
@@ -15,6 +15,7 @@ const COUNTRIES = ["IN", "US", "GB", "DE", "AU", "CA", "SG", "AE"];
 const PAGE_SIZE = 20;
 
 export function EmployeeListPage() {
+  const navigate = useNavigate();
   const { timescale } = useAuth();
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("");
@@ -158,17 +159,16 @@ export function EmployeeListPage() {
             {!loading &&
               !error &&
               items.map((employee) => (
-                <tr key={employee.id} className="border-b border-border last:border-0 hover:bg-bg">
+                <tr
+                  key={employee.id}
+                  onClick={() => navigate(`/employees/${employee.id}`)}
+                  className="border-b border-border last:border-0 hover:bg-bg cursor-pointer group"
+                >
                   <td className="px-4 py-3">
-                    <Link
-                      to={`/employees/${employee.id}`}
-                      className="block group"
-                    >
-                      <div className="font-medium text-ink group-hover:text-accent transition-colors">
-                        {employee.firstName} {employee.lastName}
-                      </div>
-                      <div className="text-xs text-muted mt-0.5 money">{employee.employeeCode}</div>
-                    </Link>
+                    <div className="font-medium text-ink group-hover:text-accent transition-colors">
+                      {employee.firstName} {employee.lastName}
+                    </div>
+                    <div className="text-xs text-muted mt-0.5 money">{employee.employeeCode}</div>
                   </td>
                   <td className="px-4 py-3">{employee.department}</td>
                   <td className="px-4 py-3">{getCountryName(employee.country)}</td>

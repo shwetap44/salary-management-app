@@ -4,7 +4,7 @@ A production-ready, full-stack console application designed for an HR Manager to
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 - **Secure HR Authentication**: Guarded by JWT-based route protection. Single HR Manager persona access with secure credential checking decoupled from direct environment imports.
 - **Dynamic Pay Timescale Toggle**: A global segmented control in the console header allowing the HR Manager to toggle the entire application instantly between **Annualized Rates** and **Monthly Equivalents** (value divided by 12).
@@ -16,7 +16,7 @@ A production-ready, full-stack console application designed for an HR Manager to
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 - **Backend**: Node.js, Express, TypeScript, PostgreSQL (node-pg pool), JWT.
 - **Backend Testing**: Jest, Supertest.
@@ -25,7 +25,7 @@ A production-ready, full-stack console application designed for an HR Manager to
 
 ---
 
-## ⚙️ Project Setup & Installation
+##  Project Setup & Installation
 
 The project is split into a `server` and a `client` folder. Follow the steps below to set up both.
 
@@ -86,14 +86,14 @@ Ensure you have a PostgreSQL database running locally (or hosted) and set up the
 
 ---
 
-## 🔑 Test Credentials
+##  Test Credentials
 To log in and explore the application:
 - **Email**: `hr@acme.test`
 - **Password**: `change-me` *(or whatever value you configured in the server `.env`)*
 
 ---
 
-## 🧪 Running Tests
+##  Running Tests
 
 A core criteria of the assessment is clean, fast, and deterministic tests:
 
@@ -113,7 +113,7 @@ npm test
 
 ---
 
-## 📐 Architectural Decisions & Code Craftsmanship
+##  Architectural Decisions & Code Craftsmanship
 
 This project demonstrates strong engineering fundamentals and solid product choices:
 1. **Decoupled Architecture**: 
@@ -133,7 +133,7 @@ This project demonstrates strong engineering fundamentals and solid product choi
 
 ---
 
-## 📄 Documentation Artifacts
+##  Documentation Artifacts
 For further details on specifications and trade-offs, check the documentation files:
 - [Requirements Specifications](file:///Users/shweta/openSource/salary_management_app/docs/requirements.md)
 - [Architecture & Testing Strategy](file:///Users/shweta/openSource/salary_management_app/docs/architecture.md)
