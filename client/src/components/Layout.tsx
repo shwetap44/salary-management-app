@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const navItems = [
   { to: "/employees", label: "Employees" },
@@ -6,6 +7,8 @@ const navItems = [
 ];
 
 export function Layout() {
+  const { logout } = useAuth();
+
   return (
     <div className="min-h-screen flex">
       <aside className="w-56 shrink-0 border-r border-border bg-surface flex flex-col">
@@ -32,8 +35,14 @@ export function Layout() {
         </nav>
       </aside>
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 border-b border-border bg-surface flex items-center justify-end px-6">
+        <header className="h-14 border-b border-border bg-surface flex items-center justify-end px-6 gap-4">
           <span className="text-sm text-muted">Signed in as HR Manager</span>
+          <button
+            onClick={logout}
+            className="text-xs font-semibold text-muted hover:text-ink px-2.5 py-1.5 rounded-lg border border-border hover:bg-bg transition-colors"
+          >
+            Sign Out
+          </button>
         </header>
         <main className="flex-1 p-6 overflow-auto">
           <Outlet />
