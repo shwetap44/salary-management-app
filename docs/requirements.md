@@ -23,6 +23,7 @@ hierarchy, no multi-role access in this phase.
 - **Multi-country support** — each employee has a country and a native
   currency (ISO 4217 code). Amounts are stored and displayed in the
   employee's native currency.
+- **Annual/Monthly Timescale Toggle** — a global segment control in the console header that allows the HR Manager to instantly toggle the entire UI between annualized base salaries and their monthly equivalents (value divided by 12). This updates the employee table, detail views, histories, KPI summaries, and department distribution charts.
 - **Insights dashboard** — the answer to "how does the org pay people":
   - KPI cards: total headcount, total payroll cost, average / median salary
   - Salary distribution by department (chart)

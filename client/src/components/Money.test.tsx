@@ -18,4 +18,10 @@ describe("Money", () => {
     render(<Money amount={null} currencyCode={null} />);
     expect(screen.getByText("No salary on record")).toBeInTheDocument();
   });
+
+  it("formats the amount as monthly rate with suffix when monthly timescale is selected", () => {
+    render(<Money amount={120000} currencyCode="USD" timescale="monthly" />);
+    expect(screen.getByText("10,000")).toBeInTheDocument();
+    expect(screen.getByText("/mo")).toBeInTheDocument();
+  });
 });

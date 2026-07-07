@@ -5,6 +5,7 @@ import { EmployeeWithSalary } from "../types/employee";
 import { Money } from "../components/Money";
 import { StatusBadge } from "../components/StatusBadge";
 import { getCountryName } from "../utils/country";
+import { useAuth } from "../context/AuthContext";
 
 const DEPARTMENTS = [
   "Engineering", "Sales", "Marketing", "Human Resources", "Finance",
@@ -14,6 +15,7 @@ const COUNTRIES = ["IN", "US", "GB", "DE", "AU", "CA", "SG", "AE"];
 const PAGE_SIZE = 20;
 
 export function EmployeeListPage() {
+  const { timescale } = useAuth();
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("");
   const [country, setCountry] = useState("");
@@ -169,7 +171,7 @@ export function EmployeeListPage() {
                   <td className="px-4 py-3">{employee.department}</td>
                   <td className="px-4 py-3">{getCountryName(employee.country)}</td>
                   <td className="px-4 py-3">
-                    <Money amount={employee.currentSalary} currencyCode={employee.salaryCurrency} />
+                    <Money amount={employee.currentSalary} currencyCode={employee.salaryCurrency} timescale={timescale} />
                   </td>
                   <td className="px-4 py-3">
                     <StatusBadge status={employee.status} />

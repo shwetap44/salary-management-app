@@ -6,8 +6,10 @@ import { HeadcountByCountryChart } from "../components/HeadcountByCountryChart";
 import { DepartmentSalaryChart } from "../components/DepartmentSalaryChart";
 import { Money } from "../components/Money";
 import { COUNTRY_NAMES } from "../utils/country";
+import { useAuth } from "../context/AuthContext";
 
 export function InsightsPage() {
+  const { timescale } = useAuth();
   const [headcount, setHeadcount] = useState<HeadcountSummary | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [moneySummary, setMoneySummary] = useState<MoneySummary | null>(null);
@@ -108,33 +110,33 @@ export function InsightsPage() {
           <>
             <div className="grid grid-cols-3 gap-4">
               <KpiCard
-                label="Total Payroll"
+                label={timescale === "monthly" ? "Est. Monthly Payroll" : "Total Payroll"}
                 value={
                   loadingMoney ? (
                     "…"
                   ) : (
-                    <Money amount={moneySummary.totalPayroll} currencyCode={moneySummary.currencyCode} />
+                    <Money amount={moneySummary.totalPayroll} currencyCode={moneySummary.currencyCode} timescale={timescale} showSuffix={false} precision={0} />
                   )
                 }
                 hint={`${moneySummary.headcount.toLocaleString()} people in this currency`}
               />
               <KpiCard
-                label="Average Salary"
+                label={timescale === "monthly" ? "Avg. Monthly Salary" : "Average Salary"}
                 value={
                   loadingMoney ? (
                     "…"
                   ) : (
-                    <Money amount={moneySummary.averageSalary} currencyCode={moneySummary.currencyCode} />
+                    <Money amount={moneySummary.averageSalary} currencyCode={moneySummary.currencyCode} timescale={timescale} showSuffix={false} precision={0} />
                   )
                 }
               />
               <KpiCard
-                label="Median Salary"
+                label={timescale === "monthly" ? "Median Monthly Salary" : "Median Salary"}
                 value={
                   loadingMoney ? (
                     "…"
                   ) : (
-                    <Money amount={moneySummary.medianSalary} currencyCode={moneySummary.currencyCode} />
+                    <Money amount={moneySummary.medianSalary} currencyCode={moneySummary.currencyCode} timescale={timescale} showSuffix={false} precision={0} />
                   )
                 }
               />
@@ -142,9 +144,9 @@ export function InsightsPage() {
 
             <div className="mt-4 rounded-lg border border-border bg-surface p-5">
               <h4 className="text-sm font-semibold mb-3">
-                Average salary by department — {moneySummary.currencyCode}
+                Average {timescale === "monthly" ? "monthly" : "annual"} salary by department — {moneySummary.currencyCode}
               </h4>
-              <DepartmentSalaryChart data={distribution} currencyCode={moneySummary.currencyCode} />
+              <DepartmentSalaryChart data={distribution} currencyCode={moneySummary.currencyCode} timescale={timescale} />
             </div>
           </>
         )}

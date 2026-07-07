@@ -7,6 +7,8 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
+  timescale: "annual" | "monthly";
+  setTimescale: (t: "annual" | "monthly") => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -14,6 +16,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(true);
+  const [timescale, setTimescaleState] = useState<"annual" | "monthly">(
+    (localStorage.getItem("timescale") as "annual" | "monthly") ?? "annual"
+  );
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -48,10 +53,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
   };
 
+  const setTimescale = (t: "annual" | "monthly") => {
+    localStorage.setItem("timescale", t);
+    setTimescaleState(t);
+  };
+
   const isAuthenticated = !!token;
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ isAuthenticated, token, login, logout, isLoading, timescale, setTimescale }}>
       {children}
     </AuthContext.Provider>
   );

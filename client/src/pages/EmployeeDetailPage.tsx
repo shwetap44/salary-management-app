@@ -5,8 +5,10 @@ import { EmployeeWithSalary, SalaryRecord } from "../types/employee";
 import { Money } from "../components/Money";
 import { StatusBadge } from "../components/StatusBadge";
 import { getCountryName } from "../utils/country";
+import { useAuth } from "../context/AuthContext";
 
 export function EmployeeDetailPage() {
+  const { timescale } = useAuth();
   const { id } = useParams<{ id: string }>();
   const [employee, setEmployee] = useState<EmployeeWithSalary | null>(null);
   const [history, setHistory] = useState<SalaryRecord[]>([]);
@@ -59,7 +61,7 @@ export function EmployeeDetailPage() {
           <div>
             <dt className="text-muted">Current salary</dt>
             <dd className="mt-0.5">
-              <Money amount={employee.currentSalary} currencyCode={employee.salaryCurrency} />
+              <Money amount={employee.currentSalary} currencyCode={employee.salaryCurrency} timescale={timescale} />
             </dd>
           </div>
         </dl>
@@ -79,7 +81,7 @@ export function EmployeeDetailPage() {
               <tr key={record.id} className="border-b border-border last:border-0">
                 <td className="py-2 money">{record.effectiveDate}</td>
                 <td className="py-2">
-                  <Money amount={record.amount} currencyCode={record.currencyCode} />
+                  <Money amount={record.amount} currencyCode={record.currencyCode} timescale={timescale} />
                 </td>
               </tr>
             ))}
